@@ -1,0 +1,55 @@
+﻿@model deAndrade_Project_II.Models.Customer
+@{
+    ViewBag.Title = "Upsert";
+}
+
+<h2><span id="title"></span> Customer</h2>
+
+@using (Html.BeginForm("Upsert", "Customer", FormMethod.Post))
+{
+    @Html.HiddenFor(c=> c.Id, new { @class = "form-control" })
+    <div class="upsert-container">
+        <div class="no-collapsing">
+            <div class="form-title">First name</div>
+            <div class="form-field">
+                @Html.TextBoxFor(c => c.First_Name, new { @class = "form-control", placeholder = "First name" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Last name</div>
+            <div class="form-field">
+                @Html.TextBoxFor(c => c.Last_Name, new { @class = "form-control", placeholder = "Last name" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Email</div>
+            <div class="form-field">
+                @Html.TextBoxFor(c => c.Email, new { @class = "form-control", placeholder = "Email" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Address</div>
+            <div class="form-field">
+                @Html.TextBoxFor(c => c.Address, new { @class = "form-control", placeholder = "Address" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Creation Date</div>
+            <div class="form-field">
+                @Html.TextBoxFor(c => c.Creation_Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="align-content-center">
+        <input type="submit" value="Submit" class="btn btn-default" />
+        <input type="button" value="Cancel" onclick="new Company().Back();" class="btn btn-default" />
+    </div>
+}

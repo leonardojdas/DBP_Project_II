@@ -1,0 +1,80 @@
+﻿@model deAndrade_Project_II.Models.UpsertSalesStaffModel
+@{
+    ViewBag.Title = "Sales Staff";
+}
+
+<h2><span id="title"></span> Sales Staff</h2>
+
+@using (Html.BeginForm("Upsert", "SalesStaff", FormMethod.Post))
+{
+    @Html.HiddenFor(gm => gm.SalesStaff.Id, new { @class = "form-control" })
+    <div class="upsert-container">
+        <div class="no-collapsing">
+            <div class="form-title">Employee name</div>
+            <div class="form-field">
+                @if (Model.isNull())
+                {
+                    <input list="employees" name="" class="form-control" onchange="new Company().getEmployeeId(this);" />
+                    <datalist id="employees">
+                        @foreach (var employee in Model.Employees)
+                        {
+                            <option id="@employee.First_Name@employee.Last_Name" data-value="@employee.Id" value="@employee.First_Name @employee.Last_Name"></option>
+                        }
+                    </datalist>
+                    @*<select name="SalesStaff.Employee_Id" class="form-control">
+                            @foreach (var employee in Model.Employees)
+                            {
+                                <option value="@employee.Id">@employee.First_Name @employee.Last_Name</option>
+                            }
+                        </select>*@
+                }
+                else
+                {
+                    <span>@Model.SalesStaff.Employee.First_Name @Model.SalesStaff.Employee.Last_Name</span>
+                }
+
+            </div>
+        </div>
+        @* since datalist can't pass the correct Employee_Id to the POST, I created this input to store that info receiving from getEmployeeId() js method*@
+        <input type="hidden" id="Employee_Id" name="SalesStaff.Employee_Id" value="" />
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Employment type</div>
+            <div class="form-field">
+                @Html.RadioButtonFor(gm => gm.SalesStaff.Full_Time, true, new { Checked = "checked" }) Full time&nbsp;&nbsp;&nbsp;
+                @Html.RadioButtonFor(gm => gm.SalesStaff.Full_Time, false) Part time
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Hire date</div>
+            <div class="form-field">
+                @Html.TextBoxFor(gm => gm.SalesStaff.Hire_Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Salary</div>
+            <div class="form-field">
+                @Html.TextBoxFor(gm => gm.SalesStaff.Salary, new { @type = "number", @class = "form-control", placeholder = "Salary", @min = "0" })
+            </div>
+        </div>
+    </div>
+
+    if (!Model.isNull())
+    {
+        <script>
+            window.onload = function () {
+                new Company().getEmployeeId(@Model.SalesStaff.Employee_Id);
+            };
+        </script>
+    }
+
+    <div class="align-content-center">
+        <input type="submit" value="Submit" class="btn btn-default" />
+        <input type="button" value="Cancel" onclick="new Company().Back();" class="btn btn-default" />
+    </div>
+}

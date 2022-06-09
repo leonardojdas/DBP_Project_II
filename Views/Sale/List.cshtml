@@ -1,0 +1,49 @@
+﻿@model List<deAndrade_Project_II.Models.Sale>
+@{
+    ViewBag.Title = "Sales";
+}
+
+<h2>Sale's List</h2>
+
+<div id="search" class="">
+    <input type="text" id="txtSearch" class="form-control" placeholder="Search">
+    <button class="btn btn-default" type="button" onclick="new Company().Search()">Search</button>
+</div>
+
+<div id="new-customer" class="">
+    <a class="btn btn-default" onclick="new Company().Upsert();">Add new sale</a>
+</div>
+
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th><span class="theader">ID</span></th>
+            <th><span class="theader">Customer name</span></th>
+            <th><span class="theader">Product name</span></th>
+            <th><span class="theader">Amount</span></th>
+            <th><span class="theader">Unit price</span></th>
+            <th><span class="theader">Total</span></th>
+            <th><span class="theader">Date</span></th>
+            <th><span class="theader">Sale advisory</span></th>
+            <th><span class="theader">Edit</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{decimal total = 0;}
+        @foreach (var sale in Model)
+        {
+            total = (decimal) sale.Amount * (decimal) sale.Product.Price;
+            <tr>
+                <td>@sale.Id</td>
+                <td>@sale.Customer.First_Name @sale.Customer.Last_Name</td>
+                <td>@sale.Product.Name</td>
+                <td>@sale.Amount</td>
+                <td>$@sale.Product.Price</td>
+                <td>$@total</td>
+                <td>@sale.Date.Value.ToString("MM/dd/yyyy")</td>
+                <td>@sale.SalesStaff.Employee.First_Name @sale.SalesStaff.Employee.Last_Name</td>
+                <td onclick="new Company().Upsert(@sale.Id)"><span class="fa fa-edit"></span></td>
+            </tr>
+        }
+    </tbody>
+</table>

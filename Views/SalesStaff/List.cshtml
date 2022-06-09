@@ -1,0 +1,41 @@
+﻿@model List<deAndrade_Project_II.Models.SalesStaff>
+@{
+    ViewBag.Title = "Sales Staff";
+}
+
+<h2>Sales Staff List</h2>
+
+<div id="search" class="">
+    <input type="text" id="txtSearch" class="form-control" placeholder="Search">
+    <button class="btn btn-default" type="button" onclick="new Company().Search()">Search</button>
+</div>
+
+<div id="new-customer" class="">
+    <a class="btn btn-default" onclick="new Company().Upsert();">Add new sales staff</a>
+</div>
+
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th><span class="theader">ID</span></th>
+            <th><span class="theader">Employee name</span></th>
+            <th><span class="theader">Full Time</span></th>
+            <th><span class="theader">Hire Date</span></th>
+            <th><span class="theader">Salary</span></th>
+            <th><span class="theader">Edit</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var salestaff in Model)
+        {
+            <tr>
+                <td>@salestaff.Id</td>
+                <td>@salestaff.Employee.First_Name @salestaff.Employee.Last_Name</td>
+                <td>@(salestaff.Full_Time == true ? "Yes" : "No")</td>
+                <td>@salestaff.Hire_Date.Value.ToString("MM/dd/yyyy")</td>
+                <td>@salestaff.Salary</td>
+                <td onclick="new Company().Upsert(@salestaff.Id)"><span class="fa fa-edit"></span></td>
+            </tr>
+        }
+    </tbody>
+</table>

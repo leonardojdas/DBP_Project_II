@@ -1,0 +1,101 @@
+﻿@model deAndrade_Project_II.Models.UpsertEmployeeModel
+@{
+    ViewBag.Title = "Employees";
+}
+
+<h2><span id="title"></span> Employee</h2>
+
+@using (Html.BeginForm("Upsert", "Employee", FormMethod.Post))
+{
+    @Html.HiddenFor(gm => gm.Employee.Id, new { @class = "form-control" })
+    <div class="upsert-container">
+        <div class="no-collapsing">
+            <div class="form-title">First name</div>
+            <div class="form-field">
+                @Html.TextBoxFor(gm => gm.Employee.First_Name, new { @class = "form-control", placeholder = "First name" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Last name</div>
+            <div class="form-field">
+                @Html.TextBoxFor(gm => gm.Employee.Last_Name, new { @class = "form-control", placeholder = "Last name" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Email</div>
+            <div class="form-field">
+                @Html.TextBoxFor(gm => gm.Employee.Email, new { @class = "form-control", placeholder = "Email" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Department</div>
+            <div class="form-field">
+                <select id="departmentId" name="Employee.Department_Id" class="form-control" onchange="new Company().ShowFields();">
+                    @{ string isSelected = ""; }
+                    @foreach (var department in Model.Departments)
+                    {
+                        if (!Model.isNull())
+                        {
+                            if (department.Id == Model.Employee.Department_Id) { isSelected = "selected"; }
+                            else { isSelected = ""; }
+                        }
+                        <option value="@department.Id" @isSelected>@department.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        @{ string hideClass = "hide"; }
+        @{ int emp_Id = 0; }
+        @{
+            if (!Model.isNull()) {
+
+                if (Model.Employee.Department.Name.ToUpper() == "SALES") {
+                    hideClass = "";
+                }
+
+                emp_Id = Model.Employee.Id;
+            }
+        }
+        <div id="salesContainer" class="@hideClass">
+
+            <div><hr /></div>
+            <div class="no-collapsing">
+                <div class="form-title">Employment type</div>
+                <div class="form-field">
+                    @Html.RadioButtonFor(gm => gm.SalesStaff.Full_Time, true, new { Checked = "checked" }) Full time&nbsp;&nbsp;&nbsp;
+                    @Html.RadioButtonFor(gm => gm.SalesStaff.Full_Time, false) Part time
+                </div>
+            </div>
+
+            <div><hr /></div>
+            <div class="no-collapsing">
+                <div class="form-title">Hire date</div>
+                <div class="form-field">
+                    @Html.TextBoxFor(gm => gm.SalesStaff.Hire_Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+                </div>
+            </div>
+
+            <div><hr /></div>
+            <div class="no-collapsing">
+                <div class="form-title">Salary</div>
+                <div class="form-field">
+                    @Html.TextBoxFor(gm => gm.SalesStaff.Salary, new { @type="number", @class = "form-control", placeholder = "Salary", @min="0" })
+                </div>
+            </div>
+            @Html.HiddenFor(gm => gm.SalesStaff.Id, new { @class = "form-control" })
+            @Html.HiddenFor(gm => gm.SalesStaff.Employee_Id, new { @class = "form-control", @Value = emp_Id })
+        </div>
+    </div>
+
+    <div class="align-content-center">
+        <input type="submit" value="Submit" class="btn btn-default" />
+        <input type="button" value="Cancel" onclick="new Company().Back();" class="btn btn-default" />
+    </div>
+}

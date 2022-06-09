@@ -1,0 +1,41 @@
+﻿@model List<deAndrade_Project_II.Models.Employee>
+@{
+    ViewBag.Title = "Employees";
+}
+
+<h2>Employee's List</h2>
+
+<div id="search" class="">
+    <input type="text" id="txtSearch" class="form-control" placeholder="Search">
+    <button class="btn btn-default" type="button" onclick="new Company().Search()">Search</button>
+</div>
+
+<div id="new-customer" class="">
+    <a class="btn btn-default" onclick="new Company().Upsert();">Add new employee</a>
+</div>
+
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th><span class="theader">ID</span></th>
+            <th><span class="theader">First name</span></th>
+            <th><span class="theader">Last name</span></th>
+            <th><span class="theader">Email</span></th>
+            <th><span class="theader">Department</span></th>
+            <th><span class="theader">Edit</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr class="tr-hover">
+                <td>@employee.Id</td>
+                <td>@employee.First_Name</td>
+                <td>@employee.Last_Name</td>
+                <td>@employee.Email</td>
+                <td>@employee.Department.Name</td>
+                <td onclick="new Company().Upsert(@employee.Id);"><span class="fa fa-edit"></span></td>
+            </tr>
+        }
+    </tbody>
+</table>

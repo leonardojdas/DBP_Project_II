@@ -1,0 +1,39 @@
+﻿@model List<deAndrade_Project_II.Models.Product>
+@{
+    ViewBag.Title = "Products";
+}
+
+<h2>Product's List</h2>
+
+<div id="search" class="">
+    <input type="text" id="txtSearch" class="form-control" placeholder="Search">
+    <button class="btn btn-default" type="button" onclick="new Company().Search()">Search</button>
+</div>
+
+<div id="new-customer" class="">
+    <a class="btn btn-default" onclick="new Company().Upsert();">Add new product</a>
+</div>
+
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th><span class="theader">ID</span></th>
+            <th><span class="theader">Name</span></th>
+            <th><span class="theader">Description</span></th>
+            <th><span class="theader">Price</span></th>
+            <th><span class="theader">Edit</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price</td>
+                <td onclick="new Company().Upsert(@product.Id);"><span class="fa fa-edit"></span></td>
+            </tr>
+        }
+    </tbody>
+</table>

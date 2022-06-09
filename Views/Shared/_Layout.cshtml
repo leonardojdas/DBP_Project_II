@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dunder Mifflin Paper Company - @ViewBag.Title</title>
+    <link rel="stylesheet" href="~/Content/main.css" />
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top header-0">
+        <div class="container header-1">
+            <div class="navbar-header nav-bar-1">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/Home"><img src="~/Images/logo.jpg" class="logo" /></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav nav-bar-2">
+                    <li>@Html.ActionLink("Departments", "List", "Department")</li>
+                    <li>@Html.ActionLink("Employees", "List", "Employee")</li>
+                    <li>@Html.ActionLink("SalesStaff", "List", "SalesStaff")</li>
+                    <li>@Html.ActionLink("Sales", "List", "Sale")</li>
+                    <li>@Html.ActionLink("Customers", "List", "Customer")</li>
+                    <li>@Html.ActionLink("Products", "List", "Product")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <div class="footer">
+        Database Programming<br />
+        Project II: Creating upsert views of all 6 tables<br />
+        Leonardo de Andrade
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script src="~/Scripts/main.js"></script>
+</body>
+</html>

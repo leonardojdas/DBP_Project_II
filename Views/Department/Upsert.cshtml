@@ -1,0 +1,49 @@
+﻿@model deAndrade_Project_II.Models.UpsertDepartmentModel
+@{
+    ViewBag.Title = "Upsert";
+}
+
+<h2><span id="title"></span> Department</h2>
+
+@using (Html.BeginForm("Upsert", "Department", FormMethod.Post))
+{
+    @Html.HiddenFor(d => d.Department.Id, new { @class = "form-control" })
+    <div class="upsert-container">
+        <div class="no-collapsing">
+            <div class="form-title">Department name</div>
+            <div class="form-field">
+                @Html.TextBoxFor(d => d.Department.Name, new { @class = "form-control", @placeholder = "Name" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Code</div>
+            <div class="form-field">
+                @Html.TextBoxFor(d => d.Department.Code, new { @class = "form-control", @placeholder = "Code", @maxlength="2" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title no-height">Number of employees</div>
+            <div class="form-field">
+                @* Number of employees can't be changed here, it's a dinamic field calculated after changing the employee's table *@
+                @if (Model.isNull())
+                {
+                    @Html.HiddenFor(d => d.Department.Num_Employees, new { @class = "form-control", @Value="0" })
+                    <span>0</span>
+                }
+                else
+                {
+                    @Html.HiddenFor(d => d.Department.Num_Employees, new { @class = "form-control" })
+                    @Model.Department.Num_Employees
+                }
+            </div>
+        </div>
+    </div>
+    <div class="align-content-center">
+        <input type="submit" value="Submit" class="btn btn-default" />
+        <input type="button" value="Cancel" onclick="new Company().Back();" class="btn btn-default" />
+    </div>
+}

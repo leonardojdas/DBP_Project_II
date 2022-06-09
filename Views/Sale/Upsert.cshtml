@@ -1,0 +1,136 @@
+﻿@model deAndrade_Project_II.Models.UpsertSaleModel
+@{
+    ViewBag.Title = "Upsert";
+}
+
+<h2><span id="title"></span> Sale</h2>
+
+@using (Html.BeginForm("Upsert", "Sale", FormMethod.Post))
+{
+    @Html.HiddenFor(gm => gm.Sale.Id, new { @class = "form-control" })
+    <div class="upsert-container">
+        <div class="no-collapsing">
+            <div class="form-title">Customer name</div>
+            <div class="form-field">
+                @if (Model.isNull())
+                {
+                    <select name="Sale.Customer_Id" class="form-control">
+                        @foreach (var customer in Model.Customers)
+                        {
+                            <option value="@customer.Id">@customer.First_Name @customer.Last_Name</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    @Html.HiddenFor(gm => gm.Sale.Customer_Id, new { @class = "form-control" })
+                    <span>@Model.Sale.Customer.First_Name @Model.Sale.Customer.Last_Name</span>
+                }
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Products</div>
+            <div class="form-field">
+                <select id="price" name="Sale.Product_Id" class="form-control" onchange="new Company().changePrice();">
+                    @{ string isSelected = ""; }
+                    @foreach (var product in Model.Products)
+                    {
+                        if (!Model.isNull())
+                        {
+                            if (product.Id == Model.Sale.Product_Id) { isSelected = "selected"; }
+                            else { isSelected = ""; }
+                        }
+                        <option id="price-@product.Id" value="@product.Id" data-value="@product.Price" @isSelected>@product.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Amount</div>
+            <div class="form-field">
+                @Html.TextBoxFor(gm => gm.Sale.Amount, new { @type = "number", @id="amount", @class = "form-control", @placeholder = "Amount", @onchange = "new Company().updateTotal(this.value)", @min = "1" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Unit price</div>
+            <div class="form-field">
+                @if (!Model.isNull())
+                {
+                    <span id="unit-price">@Model.Sale.Product.Price</span>
+                }
+                else
+                {
+                    <span id="unit-price"></span>
+                }
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Total</div>
+            <div class="form-field">
+                @if (!Model.isNull())
+                {
+                    decimal total = (decimal)(Model.Sale.Product.Price * Model.Sale.Amount);
+                    <span id="total">@total</span>
+                }
+                else
+                {
+                    <span id="total"></span>
+                }
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Date</div>
+            <div class="form-field">
+                @Html.TextBoxFor(gm => gm.Sale.Date, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control" })
+            </div>
+        </div>
+
+        <div><hr /></div>
+        <div class="no-collapsing">
+            <div class="form-title">Sale Advisory</div>
+            <div class="form-field">
+                <select name="Sale.SaleStaff_Id" class="form-control">
+                    @{ isSelected = ""; }
+                    @foreach (var salesStaff in Model.SalesStaffs)
+                    {
+                        if (!Model.isNull())
+                        {
+                            if (salesStaff.Id == Model.Sale.SaleStaff_Id) { isSelected = "selected"; }
+                            else { isSelected = ""; }
+                        }
+                        <option value="@salesStaff.Id" @isSelected>@salesStaff.Employee.First_Name @salesStaff.Employee.Last_Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    if (Model.isNull())
+    {
+        <script>
+            window.onload = function () {
+                new Company().changePrice();
+                document.querySelector("#amount").value = 1;
+                new Company().updateTotal(1);
+            };
+        </script>
+    }
+
+    <div class="align-content-center">
+        <input type="submit" value="Submit" class="btn btn-default" />
+        <input type="button" value="Cancel" onclick="new Company().Back();" class="btn btn-default" />
+    </div>
+
+
+}

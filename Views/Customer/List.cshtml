@@ -1,0 +1,43 @@
+﻿@model List<deAndrade_Project_II.Models.Customer>
+@{
+    ViewBag.Title = "Customers";
+}
+
+<h2>Customer's List</h2>
+
+<div id="search" class="">
+    <input type="text" id="txtSearch" class="form-control" placeholder="Search">
+    <button class="btn btn-default" type="button" onclick="new Company().Search()">Search</button>
+</div>
+
+<div id="new-customer" class="">
+    <a class="btn btn-default" onclick="new Company().Upsert();">Add new customer</a>
+</div>
+
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th><span class="theader">ID</span></th>
+            <th><span class="theader">First Name</span></th>
+            <th><span class="theader">Last Name</span></th>
+            <th><span class="theader">Email</span></th>
+            <th><span class="theader">Address</span></th>
+            <th><span class="theader">Creation Date</span></th>
+            <th><span class="theader">Edit</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+        <tr>
+            <td>@customer.Id</td>
+            <td>@customer.First_Name</td>
+            <td>@customer.Last_Name</td>
+            <td>@customer.Email</td>
+            <td>@customer.Address</td>
+            <td>@customer.Creation_Date.Value.ToString("MM/dd/yyyy")</td>
+            <td onclick="new Company().Upsert(@customer.Id);"><span class="fa fa-edit"></span></td>
+        </tr>
+        }
+    </tbody>
+</table>
