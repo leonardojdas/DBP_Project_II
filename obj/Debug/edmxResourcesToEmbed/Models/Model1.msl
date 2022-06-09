@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CompanyModelStoreContainer" CdmEntityContainer="CompanyEntities">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="CompanyModel.Customer">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="CompanyModel.Department">
+        <MappingFragment StoreEntitySet="Departments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Num_Employees" ColumnName="Num_Employees" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="CompanyModel.Employee">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Department_Id" ColumnName="Department_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="CompanyModel.Product">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sales">
+      <EntityTypeMapping TypeName="CompanyModel.Sale">
+        <MappingFragment StoreEntitySet="Sales">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+          <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+          <ScalarProperty Name="SaleStaff_Id" ColumnName="SaleStaff_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalesStaffs">
+      <EntityTypeMapping TypeName="CompanyModel.SalesStaff">
+        <MappingFragment StoreEntitySet="SalesStaff">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Full_Time" ColumnName="Full_Time" />
+          <ScalarProperty Name="Hire_Date" ColumnName="Hire_Date" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

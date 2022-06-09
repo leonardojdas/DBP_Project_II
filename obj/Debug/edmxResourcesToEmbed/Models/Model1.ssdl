@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="First_Name" Type="nvarchar" MaxLength="20" />
+    <Property Name="Last_Name" Type="nvarchar" MaxLength="20" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="Address" Type="nvarchar" MaxLength="150" />
+    <Property Name="Creation_Date" Type="smalldatetime" />
+  </EntityType>
+  <EntityType Name="Departments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" />
+    <Property Name="Code" Type="char" MaxLength="2" />
+    <Property Name="Num_Employees" Type="int" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="First_Name" Type="nvarchar" MaxLength="20" />
+    <Property Name="Last_Name" Type="nvarchar" MaxLength="30" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="Department_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="Price" Type="decimal" Precision="10" Scale="2" />
+  </EntityType>
+  <EntityType Name="Sales">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="smalldatetime" />
+    <Property Name="Amount" Type="int" />
+    <Property Name="Customer_Id" Type="int" Nullable="false" />
+    <Property Name="Product_Id" Type="int" Nullable="false" />
+    <Property Name="SaleStaff_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SalesStaff">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Full_Time" Type="bit" />
+    <Property Name="Hire_Date" Type="smalldatetime" />
+    <Property Name="Salary" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Employee_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Employees_Departments">
+    <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+    <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departments">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="Department_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sales_Customers">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="Customer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sales_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sales_SalesStaff">
+    <End Role="SalesStaff" Type="Self.SalesStaff" Multiplicity="1" />
+    <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesStaff">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="SaleStaff_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesStaff_Employees">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+    <End Role="SalesStaff" Type="Self.SalesStaff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SalesStaff">
+        <PropertyRef Name="Employee_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CompanyModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SalesStaff" EntityType="Self.SalesStaff" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Employees_Departments" Association="Self.FK_Employees_Departments">
+      <End Role="Departments" EntitySet="Departments" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sales_Customers" Association="Self.FK_Sales_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sales_Products" Association="Self.FK_Sales_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sales_SalesStaff" Association="Self.FK_Sales_SalesStaff">
+      <End Role="SalesStaff" EntitySet="SalesStaff" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesStaff_Employees" Association="Self.FK_SalesStaff_Employees">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="SalesStaff" EntitySet="SalesStaff" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
